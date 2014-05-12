@@ -10,6 +10,10 @@ class Organization
     @parent_id = lparent_id
   end
 
+  def self.map_stub( key, value )
+    self.new(key, value[:name], value[:parent_id])
+  end
+
   def self.all
     p = []
     StubDB.organizations.each_pair do |key, value|
@@ -44,6 +48,15 @@ class Organization
   def is_root?
     not parent_id
   end
+
+  def child_organizations
+    p = []
+    StubDB.organizations.each_pair do |key, value|
+      p << self.class.map_stub(key, value) if value[:parent_id] == id
+    end
+    p
+  end
+
 end
 
 
