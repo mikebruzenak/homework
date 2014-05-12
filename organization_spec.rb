@@ -12,5 +12,11 @@ describe 'organization model function' do
     it "should find all second level organizations as it's children" do
       org.child_organizations.length.should == 4
     end
-   end
+  end
+  context 'when organization is Org 1' do
+    let(:org) { Organization.find_by_name 'Org 1' }
+    it "should find all second level organizations as it's children" do
+      org.child_organizations.length.should == 2
+    end
+  end
 end

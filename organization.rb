@@ -17,20 +17,20 @@ class Organization
   def self.all
     p = []
     StubDB.organizations.each_pair do |key, value|
-      p << Organization.new(key, value[:name], value[:parent_id])
+      p << self.new(key, value[:name], value[:parent_id])
     end
     p
   end
 
   def self.find(id)
     value = StubDB.organizations[id]
-    return Organization.new(id, value[:name], value[:parent_id]) if value
+    return self.new(id, value[:name], value[:parent_id]) if value
     nil
   end
 
   def self.find_by_name(name)
     StubDB.organizations.each_pair do |key, value|
-      return self.new(key, value[:name], value[:parent_id]) if value[:name] == name
+      return self.map_stub(key, value) if value[:name] == name
     end
     nil
   end
